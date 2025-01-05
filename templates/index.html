@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Flask application</title>
+    <style>
+    .header {
+        font-family: 'Arial', sans-serif;
+        font-weight: bold;
+        font-size: 2.5em;
+        text-transform: uppercase;
+        color: #ffffff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        margin-top: 20px;
+    }
+    body{
+        text-align: center;  
+    }
+    body {
+        background: linear-gradient(45deg, #236614, #42ae52, #81f27f, #9dd472);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+    }
+
+    @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    .check-email {
+        color: azure;
+        border-radius: 30px;
+        border-color: #000000;
+        border-width: 1px;
+        height: 50px;
+        width: 200px;
+        box-shadow: 0 0 20px rgba(0, 128, 0, 0.7);
+        color: black;
+        font-family: 'Courier New', Courier, monospace;
+        text-transform:uppercase;
+        margin-top: 10px;
+        margin-right: 10px;
+        transition: all 0.3s ease-in-out;
+        animation: buttonAnimation 5s infinite, colorChange 10s infinite;
+    }
+
+    @keyframes buttonAnimation {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes colorChange {
+        0% { background-color: #4CAF50; }
+        25% { background-color: #81f27f; }
+        50% { background-color: #42ae52; }
+        75% { background-color: #236614; }
+        100% { background-color: #4CAF50; }
+    }
+    .check-email button text{
+        color: black;
+        text-transform: uppercase;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 20;
+    }
+    .check-email:hover {
+        background-color: #acffae;
+        color: white;
+        transform: scale(1.1);
+        transition: all 0.3s ease-in-out;
+    }
+    .check-email:hover button text {
+        font-weight: 900;
+        font-size: 20px;
+        text-transform: uppercase;
+    }
+    .form_for_data {
+        width: 80%;
+        height: 400px;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        padding: 10px;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 16px;
+        resize: none;
+        transition: all 0.3s ease-in-out;
+    }
+    .form_for_data:focus {
+        border-color: #1b2979;
+        box-shadow: 0 0 10px #76b1f5;
+        outline: none;
+    }
+    .reset-link {
+        display: inline-block;
+        margin-top: 10px;
+        text-decoration: none;
+        color: #ffffff;
+        background-color: #4CAF50;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease-in-out;
+    }
+    .reset-link:hover {
+        background-color: #81f27f;
+    }
+    .prediction-response {
+        display: initial;
+        font-size: 2em;
+        margin-top: 20px;
+        animation: appearAnimation 1s ease-out forwards;
+    }
+    @keyframes appearAnimation {
+        0% { opacity: 0; transform: translateX(-100%); }
+        100% { opacity: 1; transform: translateX(0); }
+    }
+    </style>
+</head>
+<body>
+    <h1 class="header">Email Spam Classifier</h1>
+    <form method="post" action="/predict">
+        <textarea name="email-content" placeholder="Enter your Email Body" rows="15" cols="25" class="form_for_data"
+        autocomplete="off">
+            {{ email_text }}
+        </textarea>
+        <div>
+            <button class="check-email">Check Spam</button>
+            <a href="/" class="reset-link">Reset</a>
+        </div>
+        {% if prediction_response == 1 %}
+            <h2 class="prediction-response" style="color:red;">SPAM</h2>
+        {% elif prediction_response == -1%}
+            <h2 class="prediction-response" style="color: green;">NOT SPAM</h2>
+        {% endif %}
+    </form>    
+</body>
+</html>
